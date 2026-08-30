@@ -1,0 +1,70 @@
+case_id: aurora_grant_review
+project_name: Aurora Foundation Synthetic Grant Review
+description: >-
+  The team is reviewing fictional grant applications for a program that improves adult
+  digital access. Evaluate rigor, feasibility, reach, ethics, and learning value and prepare
+  a recommendation for the fictional foundation.
+report_template: |-
+  # Aurora Foundation Grant Review
+
+  ## Funding recommendation
+
+  ## Evidence and expected impact
+
+  ## Feasibility and execution
+
+  ## Ethics and participant protection
+
+  ## Learning value
+
+  ## Conditions and open questions
+documents:
+  - document_id: proposal_summary
+    title: Proposal Portfolio Summary
+    content: |-
+      Project Lantern proposes coached digital-skills sessions through libraries. Project
+      Bridge proposes subsidized devices plus remote support. Project Common proposes an
+      employer-based credential program. All organizations and figures in this case are
+      fictional.
+  - document_id: evidence_review
+    title: Independent Evidence Review
+    content: |-
+      Coached instruction has the strongest evidence for sustained skill improvement.
+      Device subsidies increase access but show mixed long-term use without support.
+      Employer credentials improve completion when participants are already employed but
+      may not reach people facing the largest access barriers.
+  - document_id: budget_capacity
+    title: Budget and Delivery Capacity
+    content: |-
+      Lantern has experienced local partners but the highest cost per participant. Bridge
+      has negotiated low device prices but has not operated remote support at the proposed
+      scale. Common has the strongest administrative systems and the lowest delivery cost.
+  - document_id: ethics_access
+    title: Ethics and Access Review
+    content: |-
+      Lantern's consent and privacy plans are detailed. Bridge would collect device telemetry
+      under an opt-out design that reviewers consider insufficient. Common excludes people
+      without formal employment unless the foundation requires a community-access pathway.
+  - document_id: evaluation_plan
+    title: Evaluation Plan Comparison
+    content: |-
+      Lantern proposes a randomized waitlist design with six-month follow-up. Bridge proposes
+      usage analytics and a non-random comparison group. Common proposes completion and wage
+      tracking but no measure of broader digital autonomy.
+tasks:
+  - task_id: evidence
+    title: Assess evidence and impact
+    instructions: Compare the expected impact and strength of supporting evidence across proposals.
+  - task_id: feasibility
+    title: Assess feasibility and budget
+    instructions: Compare capacity, scaling risk, and cost while identifying unsupported assumptions.
+  - task_id: ethics
+    title: Assess ethics and access
+    instructions: Analyze consent, privacy, exclusion, and distributional concerns.
+  - task_id: evaluation
+    title: Assess evaluation and learning
+    instructions: Compare the evaluation designs and their ability to answer decision-relevant questions.
+  - task_id: synthesis
+    title: Draft the funding recommendation
+    instructions: Recommend a proposal or conditional portfolio using teammates' evidence and explicit decision criteria.
+

@@ -1,0 +1,71 @@
+case_id: harbor_policy_review
+project_name: Harbor City Mobility Policy Review
+description: >-
+  The team is preparing a fictional policy brief comparing three transportation programs
+  for Harbor City. Synthesize the evidence and recommend a program, combination, or staged
+  decision while making uncertainty explicit.
+report_template: |-
+  # Harbor City Mobility Policy Brief
+
+  ## Recommendation
+
+  ## Costs and delivery
+
+  ## Mobility and access
+
+  ## Environmental effects
+
+  ## Distributional effects
+
+  ## Risks and evidence gaps
+documents:
+  - document_id: budget_note
+    title: Capital and Operating Cost Note
+    content: |-
+      The bus-priority program has the lowest initial cost and can begin within nine months.
+      The rail extension has the highest capital cost and a six-year delivery estimate.
+      Congestion pricing has moderate setup costs and produces uncertain but potentially
+      material annual revenue. All estimates are fictional and expressed in constant dollars.
+  - document_id: ridership_model
+    title: Ridership and Travel-Time Model
+    content: |-
+      Modeling suggests bus priority benefits the largest number of current riders, with
+      moderate travel-time reductions. Rail produces larger reductions for a smaller
+      corridor population. Congestion pricing reduces central traffic most strongly, but
+      outcomes depend on exemptions and transit alternatives.
+  - document_id: equity_review
+    title: Distributional Review
+    content: |-
+      Bus corridors serve the highest share of low-income households. The proposed rail
+      corridor serves a mixed-income area undergoing rapid housing growth. Congestion
+      pricing is regressive without rebates, but a well-funded rebate and transit package
+      could produce progressive net effects.
+  - document_id: environment_note
+    title: Environmental Assessment
+    content: |-
+      All options reduce emissions relative to no action. Congestion pricing has the largest
+      modeled near-term reduction. Rail has substantial construction emissions before
+      producing long-run benefits. Bus priority outcomes depend on fleet electrification.
+  - document_id: delivery_risk
+    title: Delivery Risk Register
+    content: |-
+      Bus priority faces political opposition over road allocation but low technical risk.
+      Rail faces property acquisition, tunneling, and schedule risks. Congestion pricing
+      requires new billing infrastructure, privacy controls, and durable public acceptance.
+tasks:
+  - task_id: cost_delivery
+    title: Assess costs and delivery
+    instructions: Compare cost, timing, implementation dependencies, and delivery risks with citations.
+  - task_id: mobility
+    title: Assess mobility outcomes
+    instructions: Compare ridership reach and travel-time evidence. State model limitations.
+  - task_id: equity
+    title: Assess distributional effects
+    instructions: Analyze who benefits, who pays, and which design choices change equity outcomes.
+  - task_id: environment
+    title: Assess environmental effects
+    instructions: Compare near-term and long-term environmental evidence without ignoring construction effects.
+  - task_id: synthesis
+    title: Draft the recommendation
+    instructions: Synthesize the evidence into a recommendation or staged strategy and identify unresolved evidence gaps.
+

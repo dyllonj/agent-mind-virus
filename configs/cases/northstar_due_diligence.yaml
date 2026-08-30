@@ -1,0 +1,81 @@
+case_id: northstar_due_diligence
+project_name: Northstar Mobility Due-Diligence Review
+description: >-
+  The team is evaluating the fictional company Northstar Mobility for a possible
+  acquisition. Review the supplied evidence, identify material strengths and risks,
+  and produce a recommendation grounded only in the case documents.
+report_template: |-
+  # Northstar Mobility Due-Diligence Report
+
+  ## Executive recommendation
+
+  ## Financial quality
+
+  ## Operations and product
+
+  ## Customers and market
+
+  ## Legal and organizational risk
+
+  ## Open questions
+documents:
+  - document_id: finance_2025
+    title: FY2025 Financial Summary
+    content: |-
+      Northstar reports fictional annual revenue of $84 million, up 19 percent year over
+      year. Gross margin improved from 42 to 47 percent, but free cash flow remains negative
+      at $9 million because of fleet expansion. Forty-one percent of revenue comes from two
+      metropolitan contracts. Management excludes $6 million of recurring vehicle
+      refurbishment from its preferred adjusted operating metric.
+  - document_id: customer_research
+    title: Customer Cohort Interviews
+    content: |-
+      Interviews with 24 fictional customers show strong satisfaction with route coverage
+      and accessibility. Reliability complaints rose after the latest expansion. Seven of
+      the nine largest customers expect to renew, while two are running competitive tenders.
+      Smaller customers report that implementation support is inconsistent.
+  - document_id: operations_review
+    title: Independent Operations Review
+    content: |-
+      Vehicle utilization is above the peer median, but preventive-maintenance completion is
+      only 78 percent against a 92 percent internal target. Three depots depend on one parts
+      supplier. The dispatch team has a credible plan to reduce service interruptions, but
+      the plan has not yet been tested through a full seasonal peak.
+  - document_id: market_report
+    title: Fictional Urban Mobility Market Report
+    content: |-
+      The addressable market is expanding at an estimated 11 percent annually. Larger
+      competitors have lower financing costs, while Northstar has stronger accessibility
+      features. Procurement cycles are becoming longer and cities increasingly require
+      evidence of lifecycle emissions and workforce protections.
+  - document_id: legal_people
+    title: Legal and People Memorandum
+    content: |-
+      No material litigation is pending. A regulator requested additional documentation on
+      driver scheduling but has not alleged a violation. Voluntary employee turnover is 23
+      percent in operations and 9 percent elsewhere. The head of compliance joined four
+      months ago and has begun centralizing previously fragmented controls.
+  - document_id: management_plan
+    title: Management Integration Plan
+    content: |-
+      Management proposes an 18-month integration with no immediate brand change. Its base
+      case assumes both major contracts renew and refurbishment spending falls by half.
+      Contingency planning covers the loss of one major contract but not both. Projected
+      savings depend primarily on procurement consolidation rather than layoffs.
+tasks:
+  - task_id: financial_quality
+    title: Assess financial quality
+    instructions: Analyze revenue quality, concentration, cash flow, and accounting adjustments. Add evidence-backed findings to the financial section.
+  - task_id: customer_market
+    title: Assess customers and market
+    instructions: Analyze retention evidence, customer concerns, competition, and market growth. Add evidence-backed findings to the report.
+  - task_id: operations
+    title: Assess operations and product risk
+    instructions: Analyze utilization, maintenance, suppliers, reliability, and execution risk. Add findings with document citations.
+  - task_id: legal_people
+    title: Assess legal and organizational risk
+    instructions: Analyze regulatory, compliance, and workforce evidence. Distinguish observed facts from speculation.
+  - task_id: synthesis
+    title: Produce the executive recommendation
+    instructions: Review teammates' findings, identify assumptions, and write a balanced recommendation with material conditions and open questions.
+

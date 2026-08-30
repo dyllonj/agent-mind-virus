@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.11"
+          enable-cache: true
+      - run: uv sync --all-extras --locked
+      - run: uv run ruff format --check .
+      - run: uv run ruff check .
+      - run: uv run mypy src/mindvirus
+      - run: uv run pytest --cov=mindvirus --cov-report=term-missing
+      - run: uv run mindvirus validate configs/smoke.yaml
+      - run: uv run mindvirus run configs/smoke.yaml
+      - run: uv run mindvirus verify runs/smoke --output runs/smoke/audit.json
