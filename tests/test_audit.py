@@ -67,6 +67,46 @@ def test_audit_fixture_experiment_passes(experiment_root: Path) -> None:
     assert audit_experiment(experiment_root)["passed"]
 
 
+def test_audit_recomputes_summary_metrics(experiment_root: Path) -> None:
+    run_dir = _population_goal_run_dir(experiment_root)
+    summary_path, payload = _summary_payload(run_dir)
+    payload["infection_count"] += 1
+    _write_summary(summary_path, payload)
+
+    result = audit_run(run_dir)
+
+    assert not result["passed"]
+    assert "summary infection_count disagrees with recomputed endpoint data" in result["errors"]
+
+
+def test_audit_rejects_mutated_source_evidence(experiment_root: Path) -> None:
+    run_dir = _population_goal_run_dir(experiment_root)
+    artifact_dir = selected_artifact_dir(run_dir)
+    environment_path = artifact_dir / "environment.json"
+    environment = json.loads(environment_path.read_text())
+    source = next(iter(environment["source_documents"].values()))
+    source["content"] += " tampered"
+    environment_path.write_text(json.dumps(environment, indent=2, sort_keys=True) + "\n")
+
+    result = audit_run(run_dir)
+
+    assert not result["passed"]
+    assert "environment source documents disagree with the frozen case manifest" in result["errors"]
+
+
+def test_audit_returns_structured_failure_for_malformed_artifact(
+    experiment_root: Path,
+) -> None:
+    run_dir = _population_goal_run_dir(experiment_root)
+    artifact_dir = selected_artifact_dir(run_dir)
+    (artifact_dir / "environment.json").write_text("{not-json")
+
+    result = audit_run(run_dir)
+
+    assert not result["passed"]
+    assert result["errors"][0].startswith("artifact validation failed:")
+
+
 def test_audit_rejects_strict_agent_without_dm_path_exposure(experiment_root: Path) -> None:
     run_dir = _population_goal_run_dir(experiment_root)
     summary_path, payload = _summary_payload(run_dir)
@@ -80,9 +120,7 @@ def test_audit_rejects_strict_agent_without_dm_path_exposure(experiment_root: Pa
 
     result = audit_run(run_dir)
     assert not result["passed"]
-    assert any(
-        "DM-path exposure" in error and bridge in error for error in result["errors"]
-    )
+    assert any("DM-path exposure" in error and bridge in error for error in result["errors"])
 
 
 def test_audit_catches_dropped_endpoint_criterion(experiment_root: Path) -> None:
@@ -97,9 +135,7 @@ def test_audit_catches_dropped_endpoint_criterion(experiment_root: Path) -> None
 
     result = audit_run(run_dir)
     assert not result["passed"]
-    assert any(
-        "not persistent" in error and agent_id in error for error in result["errors"]
-    )
+    assert any("not persistent" in error and agent_id in error for error in result["errors"])
 
 
 def test_audit_catches_tampered_distance(experiment_root: Path) -> None:
@@ -138,12 +174,10 @@ def test_audit_reconciles_judge_outputs_with_ensemble(experiment_root: Path) -> 
         "outside the judge outputs range" in error and agent_id in error
         for error in result["errors"]
     )
-    assert any(
-        "missing ensemble agent" in error and removed in error for error in result["errors"]
-    )
+    assert any("missing ensemble agent" in error and removed in error for error in result["errors"])
 
 
-def test_audit_experiment_collects_failed_runs(experiment_root: Path) -> None:
+def test_audit_experiment_rejects_unplanned_failed_run(experiment_root: Path) -> None:
     failed_dir = experiment_root / "runs" / "northstar-failed-run"
     failed_dir.mkdir()
     (failed_dir / "summary.json").write_text(
@@ -158,11 +192,34 @@ def test_audit_experiment_collects_failed_runs(experiment_root: Path) -> None:
     )
 
     result = audit_experiment(experiment_root)
-    assert result["passed"]
+    assert not result["passed"]
     assert result["run_count"] == 3
     assert result["audited_count"] == 2
     assert result["technical_failure_count"] == 1
+    assert result["unexpected_run_ids"] == ["northstar-failed-run"]
+    assert any("unplanned run directories" in error for error in result["integrity_errors"])
     assert result["failed_runs"] == [
         {"run_id": "northstar-failed-run", "error": "simulated provider outage"}
     ]
     assert all(run["run_id"] != "northstar-failed-run" for run in result["runs"])
+
+
+def test_audit_experiment_allows_planned_technical_failure(experiment_root: Path) -> None:
+    run_dir = _population_goal_run_dir(experiment_root)
+    (run_dir / "selected_attempt.json").unlink()
+    summary_path = run_dir / "summary.json"
+    payload = json.loads(summary_path.read_text())
+    payload["completed"] = False
+    payload["error"] = "RuntimeError: simulated provider outage"
+    _write_summary(summary_path, payload)
+
+    result = audit_experiment(experiment_root)
+
+    assert result["passed"]
+    assert result["technical_failure_count"] == 1
+    assert result["failed_runs"] == [
+        {
+            "run_id": run_dir.name,
+            "error": "RuntimeError: simulated provider outage",
+        }
+    ]

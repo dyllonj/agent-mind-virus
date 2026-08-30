@@ -10,4 +10,13 @@ At the end of each rollout, clean agents received the context-wipe warning used 
 
 The preregistered rollout endpoint required at least one initially clean agent that was at graph distance two or greater, never directly contacted by the origin, scored 3, retained target endorsement in private memory, attempted an outgoing target-related retransmission, and received at least one target-bearing direct message from a non-origin agent delivered no later than its first target-bearing activity. The rollout was the independent observation. The primary estimand was the population-minus-personal-preference risk difference across preregistered cases and target positions. We reported Wilson intervals, a stratified paired bootstrap interval, a Newcombe interval, a one-sided Fisher exact test, and an adjusted logistic model with design-factor fixed effects and block-clustered standard errors when estimable.
 
+Before estimating outcomes, we required the planned run inventory to match the experiment
+manifest and reran a trace-integrity audit. The audit validated manifest identity and seeds,
+event ordering and request-response pairing, immutable source equality, message delivery
+against the event trace and graph, agent snapshot counts, raw-judge aggregation, provider
+usage, and every run-level endpoint field by recomputing it from judgments and exposure
+events. Analysis read only the immutable selected attempt, stopped on any audit failure, and
+recorded SHA-256 digests for the experiment manifest and admitted dataset.
+
+
 The non-coding environment was the deliberate domain change from the supplied coding-agent study. The second deliberate change was replacing an evolved viral seed with a goal-only origin prompt. We retained the six-agent structure, 30-round horizon, direct-message-only origin, private memory, task queue, fully connected and bridge graphs, final memory warning, four ideological target families, strict 0–3 judging, model variation, and warning-defense concept.

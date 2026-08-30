@@ -133,6 +133,15 @@ uv run mindvirus export-review runs/weekend-pilot-v1 --output review/weekend-pil
 uv run mindvirus analyze runs/weekend-pilot-v1 --output analysis-output/weekend-pilot-v1
 ```
 
+`analyze` reruns the complete integrity audit before reading outcomes, writes that audit to
+`data_validity.json`, and exits without `analysis.json`, tables, or figures if any selected
+artifact, trace, source document, message record, judge aggregation, endpoint field, manifest
+identity, run inventory, or provider-budget invariant fails. It reads each logical run's
+`selected_attempt.json`; a mutable promoted summary cannot silently replace the admitted
+attempt. Archive the resulting manifest SHA-256 and input-dataset SHA-256 with the paper
+materials.
+
+
 The paid canary commands are:
 
 ```bash

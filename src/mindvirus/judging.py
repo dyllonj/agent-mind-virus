@@ -299,9 +299,7 @@ def _summarize(
     agent_cache_read = sum(state.cache_read_input_tokens for state in execution.agents.values())
     agent_cost = sum(state.reported_cost_usd for state in execution.agents.values())
     agent_cost_reports = sum(state.cost_report_count for state in execution.agents.values())
-    agent_usage_missing = sum(
-        state.usage_missing_responses for state in execution.agents.values()
-    )
+    agent_usage_missing = sum(state.usage_missing_responses for state in execution.agents.values())
     total_calls = agent_calls + int(judge_usage["calls"])
     total_input = agent_input + int(judge_usage["input_tokens"])
     total_output = agent_output + int(judge_usage["output_tokens"])

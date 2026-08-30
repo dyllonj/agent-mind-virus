@@ -50,20 +50,55 @@
 
 ## Analysis files
 
-`all_runs.csv` retains completed and failed runs. `completed_runs.csv` is the analysis-ready run table. `condition_estimates.csv` reports only endpoint-eligible denominators while retaining total counts. `agent_level.csv` contains nested descriptive observations. `threshold_robustness.csv` recomputes the endpoint at score thresholds 2 and 3.
+`data_validity.json` is written before any outcome analysis. It records the experiment
+manifest and selected-input SHA-256 digests, planned and observed run inventories, unresolved
+technical failures, provider-ledger checks, per-run artifact hashes, and every
+trace-integrity error. Analysis stops without producing estimates when this audit fails.
 
-`strategy_taxonomy.csv` gives rollout-level indicators for the fixed mechanism taxonomy. `strategy_messages.csv` gives category-coded messages. `transmission_edges.csv` gives every target-bearing directed message edge, graph distances, rounds, and final recipient and sender scores.
+`all_runs.csv` retains completed and failed logical runs. `completed_runs.csv` is the
+analysis-ready run table. Both read the immutable selected attempt rather than the mutable
+promoted summary. `condition_estimates.csv` reports only endpoint-eligible denominators while
+retaining total counts. `stratified_estimates.csv` retains complete design-factor cells.
+`target_effects.csv` records every manifest target, including a `not_estimable` row when a
+target has no in-scope observations.
 
-`judge_agreement.csv` pairs the deterministic screen's raw score against each semantic judge for every agent. The `judge_agreement` list in `analysis.json` summarizes each judge pair with its pair count, exact score agreement, and quadratic-weighted kappa.
+`agent_level.csv` contains nested descriptive observations. `threshold_robustness.csv`
+recomputes the endpoint at score thresholds 2 and 3. `strategy_taxonomy.csv` gives
+rollout-level indicators for the fixed mechanism taxonomy. `strategy_messages.csv` gives
+category-coded messages. `transmission_edges.csv` gives every target-bearing directed
+message edge, graph distances, rounds, and final recipient and sender scores.
 
-`analysis.json` contains the primary estimand, adjusted model, heterogeneity, defense estimate, constrained interpretation, and a `provenance` marker: `mock_fixture_not_empirical_evidence` when every analyzed run used the deterministic mock backend, otherwise `model_data`. `analysis_report.md` is a human-readable rendering and leads with the same provenance banner for mock-only data.
+`judge_agreement.csv` pairs the deterministic screen's raw score against each semantic judge
+for every agent. The `judge_agreement` list in `analysis.json` summarizes each judge pair
+with its pair count, exact score agreement, and quadratic-weighted kappa.
 
-Inside the primary estimand, `topology_scope` names the topology the confirmatory contrast is restricted to (`bridge`) and `n_in_scope` counts the rollouts inside that scope. `bootstrap_paired` records whether any design stratum contained both conditions; `paired_strata_total` and `paired_strata_used` count all design strata and the two-arm strata the paired bootstrap interval actually resamples. The heterogeneity block carries the same scope fields plus `goals_estimable` and, when needed, a `note` naming targets whose risk difference is not estimable — including preregistered targets with zero in-scope runs — which count as not positive in the domain-coverage rule.
+`analysis.json` contains the exact analysis seed and bootstrap count, input fingerprints,
+audit summary, primary estimand, adjusted model, target heterogeneity, defense estimate,
+secondary outcomes, provider diagnostics, constrained interpretation, and provenance. The
+`provenance` marker is `mock_fixture_not_empirical_evidence` when every analyzed run used
+the deterministic mock backend, `model_data` when none did, and
+`mixed_mock_and_model_data` for a mixture; mock and empirical host runs cannot be combined.
+`analysis_report.md` renders the paper-facing
+counts, intervals, target table, adjusted model, secondary outcomes, judge reliability, and
+provenance caveats.
 
-`provider_calls.csv` contains one normalized response per provider call, including stable call ID, seed-linked provenance, exact token counts, renderer termination, latency, context utilization, tool-call count, and calculated or reported cost. `provider_diagnostics.csv` aggregates those fields by host/judge role and model variant. `technical_failures.csv` retains every failed immutable attempt and its error class.
+Inside the primary estimand, `topology_scope` is `bridge`; `n_in_scope` counts admitted
+rollouts. `bootstrap_paired` records whether any design stratum contained both arms.
+`paired_strata_total`, `paired_strata_used`, and `paired_strata_complete` expose
+whether every randomization block retained both arms. The heterogeneity block includes
+targets with zero in-scope runs and sets `domain_coverage_assessable` only for a four-target
+manifest.
+
+`provider_calls.csv` contains one normalized response per provider call, including stable
+call ID, seed-linked provenance, exact token counts, renderer termination, latency, context
+utilization, tool-call count, and calculated or reported cost. `provider_diagnostics.csv`
+aggregates those fields by host/judge role and model variant. `technical_failures.csv`
+retains every failed immutable attempt and its error class.
 
 ## Audit and billing artifacts
 
-The experiment-level audit report gives `run_count`, `audited_count`, `passed_count`, and `failed_count` for completed runs, and collects technically failed runs in `failed_runs` with their recorded errors (also tallied as `technical_failure_count`) instead of aborting the whole audit.
+The experiment-level audit requires the planned and observed run inventories to agree. It
+recomputes every completed run's endpoint fields from selected trace, message, graph, and
+judge artifacts while retaining unresolved technical runs in `failed_runs`.
 
 In the billing reconciliation artifact, `unmatched_events` quarantines provider events whose model is absent from the frozen catalog and alias map — recording session, model, event type, and reason — so reconciliation can continue, and `missing_token_count_events` counts matched events that arrived without a token count; those events contribute zero tokens.

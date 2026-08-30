@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 
 from mindvirus.analysis import (
+    MIXED_PROVENANCE,
     MOCK_PROVENANCE,
     _adjusted_logistic_model,
     _agreement_summary,
@@ -20,6 +21,7 @@ from mindvirus.analysis import (
     _render_report,
     analyze_experiment,
 )
+from mindvirus.artifacts import selected_artifact_dir
 from mindvirus.config import load_config
 from mindvirus.runner import ExperimentRunner
 from mindvirus.schemas import RunSummary
@@ -67,6 +69,26 @@ def test_adjusted_model_reports_perfect_separation_as_not_estimable() -> None:
     result = _adjusted_logistic_model(pd.DataFrame(rows))
     assert result["status"] == "not_estimable"
     assert "separation" in result["reason"]
+
+
+def test_adjusted_model_excludes_non_primary_topologies() -> None:
+    rows = []
+    for topology, replicates in (("bridge", 4), ("chain", 6)):
+        for replicate in range(replicates):
+            for condition in ("population_goal", "personal_preference"):
+                row = _row(
+                    condition,
+                    replicate % 2,
+                    block_id=f"{topology}-{replicate}",
+                    topology=topology,
+                )
+                row["case_id"] = "case"
+                rows.append(row)
+
+    result = _adjusted_logistic_model(pd.DataFrame(rows))
+
+    assert result["status"] == "not_estimable"
+    assert "at least ten runs" in result["reason"]
 
 
 def test_condition_plot_tolerates_roundoff_at_probability_boundary(tmp_path: Path) -> None:
@@ -225,6 +247,26 @@ def test_zero_run_preregistered_target_counts_as_not_positive() -> None:
     assert "domain-general criterion is not met" in interpretation
 
 
+def test_three_target_manifest_cannot_satisfy_four_target_domain_rule() -> None:
+    rows = []
+    for goal_id in ("a", "b", "c"):
+        rows += [_row("population_goal", 1, goal_id=goal_id) for _ in range(3)]
+        rows += [_row("personal_preference", 0, goal_id=goal_id) for _ in range(3)]
+    heterogeneity = _heterogeneity_tests(pd.DataFrame(rows), ["a", "b", "c"])
+    primary = {
+        "status": "estimated",
+        "paired_strata_complete": True,
+        "bootstrap_95_ci": [0.2, 0.9],
+        "risk_difference": 0.6,
+        "fisher_exact_one_sided_p": 0.001,
+    }
+
+    interpretation = _interpret_primary(primary, heterogeneity)
+
+    assert not heterogeneity["domain_coverage_assessable"]
+    assert "four-target domain-general rule cannot be evaluated" in interpretation
+
+
 def test_preregistered_goals_read_from_experiment_manifest(tmp_path: Path) -> None:
     manifest = {"config": {"matrix": {"goals": ["goal_x", "goal_y"]}}}
     (tmp_path / "experiment_manifest.json").write_text(json.dumps(manifest))
@@ -303,7 +345,8 @@ def _summary(model: str) -> RunSummary:
 
 def test_provenance_detection() -> None:
     assert _provenance([_summary("mock/cascade"), _summary("mock/judge")]) == MOCK_PROVENANCE
-    assert _provenance([_summary("mock/cascade"), _summary("anthropic/claude")]) == "model_data"
+    assert _provenance([_summary("mock/cascade"), _summary("anthropic/claude")]) == MIXED_PROVENANCE
+    assert _provenance([_summary("anthropic/claude")]) == "model_data"
 
 
 async def test_mock_experiment_analysis_surfaces_provenance_and_kappa(tmp_path: Path) -> None:
@@ -321,10 +364,15 @@ async def test_mock_experiment_analysis_surfaces_provenance_and_kappa(tmp_path: 
     payload = json.loads((analysis_dir / "analysis.json").read_text())
     assert payload["provenance"] == MOCK_PROVENANCE
 
+    assert json.loads((analysis_dir / "data_validity.json").read_text())["passed"]
+    assert (analysis_dir / "target_effects.csv").exists()
     report = (analysis_dir / "analysis_report.md").read_text()
-    assert report.startswith("> PROVENANCE: all runs in this analysis used the deterministic mock backend")
+    assert report.startswith(
+        "> PROVENANCE: all runs in this analysis used the deterministic mock backend"
+    )
 
     assert result["judge_agreement"]
+    assert "Newcombe 95% interval" in report
     for entry in result["judge_agreement"]:
         assert entry["judge_a"] == "deterministic"
         assert 0.0 <= entry["exact_agreement"] <= 1.0
@@ -338,3 +386,24 @@ async def test_mock_experiment_analysis_surfaces_provenance_and_kappa(tmp_path: 
     assert low <= primary["risk_difference"] <= high
     assert isinstance(primary["paired_strata_total"], int)
     assert isinstance(primary["paired_strata_used"], int)
+
+
+async def test_analysis_refuses_data_that_fail_integrity_audit(tmp_path: Path) -> None:
+    config = load_config(ROOT / "configs/smoke.yaml")
+    config.experiment_id = "analysis-validity-gate-test"
+    config.output_dir = tmp_path / "runs"
+    config.matrix.replicates = 1
+    await ExperimentRunner(config).run_all()
+    experiment_root = config.resolved_output_dir()
+    run_dir = next((experiment_root / "runs").iterdir())
+    summary_path = selected_artifact_dir(run_dir) / "summary.json"
+    payload = json.loads(summary_path.read_text())
+    payload["infection_count"] += 1
+    summary_path.write_text(json.dumps(payload))
+    analysis_dir = tmp_path / "analysis"
+
+    with pytest.raises(ValueError, match="failed the integrity audit"):
+        analyze_experiment(experiment_root, analysis_dir, bootstrap_samples=50)
+
+    assert not json.loads((analysis_dir / "data_validity.json").read_text())["passed"]
+    assert not (analysis_dir / "analysis.json").exists()

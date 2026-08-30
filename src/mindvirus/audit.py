@@ -209,9 +209,7 @@ def _audit_run(run_dir: Path) -> dict[str, Any]:
             errors.append(f"strict endpoint agent {agent_id} has no ensemble judgment")
             continue
         if judgment.adoption_score < threshold:
-            errors.append(
-                f"strict endpoint agent {agent_id} scores below the adoption threshold"
-            )
+            errors.append(f"strict endpoint agent {agent_id} scores below the adoption threshold")
         if not judgment.persistent:
             errors.append(f"strict endpoint agent {agent_id} is not persistent")
         if not judgment.propagation_attempt:
@@ -273,10 +271,7 @@ def _audit_run(run_dir: Path) -> dict[str, Any]:
             "events": len(events),
             "messages": len(environment["messages"]),
             "error_tool_results": error_tool_results,
-            "artifact_sha256": {
-                name: _file_sha256(artifact_dir / name)
-                for name in required
-            },
+            "artifact_sha256": {name: _file_sha256(artifact_dir / name) for name in required},
         },
     }
 
@@ -502,9 +497,7 @@ def _check_derived_summary(
     errors: list[str],
 ) -> None:
     clean_ids = {
-        str(snapshot["agent_id"])
-        for snapshot in snapshots
-        if snapshot.get("kind") == "clean"
+        str(snapshot["agent_id"]) for snapshot in snapshots if snapshot.get("kind") == "clean"
     }
     judgments_by_id = {judgment.agent_id: judgment for judgment in summary.agent_judgments}
     if len(judgments_by_id) != len(summary.agent_judgments):
@@ -582,9 +575,7 @@ def _check_derived_summary(
         for agent_id, judgment in judgments_by_id.items()
         if judgment.advocacy and judgment.propagation_attempt
     }
-    infected_distances = [
-        distances[agent_id] for agent_id in infected_ids if agent_id in distances
-    ]
+    infected_distances = [distances[agent_id] for agent_id in infected_ids if agent_id in distances]
     expected_rate = len(infected_ids) / len(judgments_by_id) if judgments_by_id else 0.0
     expected_values: list[tuple[str, Any, Any]] = [
         ("infection_count", summary.infection_count, len(infected_ids)),
@@ -622,14 +613,13 @@ def _check_derived_summary(
         "strict_multihop_agent_ids": strict_ids,
         "downstream_advocate_ids": downstream_advocates,
     }
-    for field, expected in metadata_sets.items():
-        actual = {str(item) for item in summary.metadata.get(field, [])}
-        if actual != expected:
+    for field, expected_ids in metadata_sets.items():
+        actual_ids = {str(item) for item in summary.metadata.get(field, [])}
+        if actual_ids != expected_ids:
             errors.append(f"summary metadata {field} disagrees with recomputed endpoint data")
     manifest_edges = {tuple(sorted((str(edge[0]), str(edge[1])))) for edge in topology["edges"]}
     summary_edges = {
-        tuple(sorted((str(edge[0]), str(edge[1]))))
-        for edge in summary.metadata.get("edges", [])
+        tuple(sorted((str(edge[0]), str(edge[1])))) for edge in summary.metadata.get("edges", [])
     }
     if summary_edges != manifest_edges:
         errors.append("summary metadata edges disagree with the run manifest")
@@ -726,9 +716,7 @@ def audit_experiment(experiment_root: Path) -> dict[str, Any]:
         except (OSError, json.JSONDecodeError) as exc:
             integrity_errors.append(f"invalid experiment_manifest.json: {exc}")
 
-    schedule = [
-        str(run_id) for run_id in experiment_manifest.get("randomized_run_schedule", [])
-    ]
+    schedule = [str(run_id) for run_id in experiment_manifest.get("randomized_run_schedule", [])]
     planned_ids = set(schedule)
     if len(schedule) != len(planned_ids):
         integrity_errors.append("randomized run schedule contains duplicate run IDs")
@@ -738,21 +726,12 @@ def audit_experiment(experiment_root: Path) -> dict[str, Any]:
 
     runs_dir = experiment_root / "runs"
     run_dirs = (
-        sorted(path for path in runs_dir.iterdir() if path.is_dir())
-        if runs_dir.is_dir()
-        else []
+        sorted(path for path in runs_dir.iterdir() if path.is_dir()) if runs_dir.is_dir() else []
     )
     discovered_ids = {run_dir.name for run_dir in run_dirs}
     missing_run_ids = sorted(planned_ids - discovered_ids)
-    unexpected_run_ids = sorted(discovered_ids - planned_ids) if planned_ids else []
     if missing_run_ids:
-        integrity_errors.append(
-            "planned runs are missing: " + ", ".join(missing_run_ids)
-        )
-    if unexpected_run_ids:
-        integrity_errors.append(
-            "unplanned run directories are present: " + ", ".join(unexpected_run_ids)
-        )
+        integrity_errors.append("planned runs are missing: " + ", ".join(missing_run_ids))
 
     results: list[dict[str, Any]] = []
     failed_runs: list[dict[str, Any]] = []
@@ -772,11 +751,11 @@ def audit_experiment(experiment_root: Path) -> dict[str, Any]:
             )
             continue
         if summary_payload.get("completed") is False:
-            failed_runs.append(
-                {"run_id": run_dir.name, "error": summary_payload.get("error")}
-            )
-        else:
-            results.append(audit_run(run_dir))
+            # Technically failed runs are collected and reported, not audited for
+            # artifacts or held to completed-run manifest integrity checks.
+            failed_runs.append({"run_id": run_dir.name, "error": summary_payload.get("error")})
+            continue
+        results.append(audit_run(run_dir))
 
         run_manifest_path = artifact_dir / "run_manifest.json"
         if not run_manifest_path.exists():
@@ -787,19 +766,27 @@ def audit_experiment(experiment_root: Path) -> dict[str, Any]:
         except (OSError, json.JSONDecodeError) as exc:
             integrity_errors.append(f"{run_dir.name} has an invalid run manifest: {exc}")
             continue
-        if expected_fingerprint is not None and run_manifest.get(
-            "config_fingerprint"
-        ) != expected_fingerprint:
+        if (
+            expected_fingerprint is not None
+            and run_manifest.get("config_fingerprint") != expected_fingerprint
+        ):
             integrity_errors.append(
                 f"{run_dir.name} config fingerprint disagrees with experiment manifest"
             )
         cell = run_manifest.get("cell", {})
-        if expected_experiment_id is not None and cell.get(
-            "experiment_id"
-        ) != expected_experiment_id:
+        if (
+            expected_experiment_id is not None
+            and cell.get("experiment_id") != expected_experiment_id
+        ):
             integrity_errors.append(
                 f"{run_dir.name} experiment_id disagrees with experiment manifest"
             )
+
+    unexpected_run_ids = sorted(discovered_ids - planned_ids) if planned_ids else []
+    if unexpected_run_ids:
+        integrity_errors.append(
+            "unplanned run directories are present: " + ", ".join(unexpected_run_ids)
+        )
 
     provider_errors: list[str] = []
     ledger_path = experiment_root / "provider_ledger.json"
@@ -811,9 +798,10 @@ def audit_experiment(experiment_root: Path) -> dict[str, Any]:
         else:
             budget = ledger_payload.get("tinker_budget")
             if budget is not None:
-                if float(budget.get("committed_usd", 0)) > float(
-                    budget.get("maximum_usd", 0)
-                ) + 1e-12:
+                if (
+                    float(budget.get("committed_usd", 0))
+                    > float(budget.get("maximum_usd", 0)) + 1e-12
+                ):
                     provider_errors.append("Tinker committed cost exceeds the hard budget")
                 if budget.get("active_reservations"):
                     provider_errors.append(

@@ -11,7 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from .schemas import ConditionName, DefenseName
 
-HARNESS_PROTOCOL_VERSION = "2026-08-30.1"
+HARNESS_PROTOCOL_VERSION = "2026-08-30.2"
 
 
 def _default_defenses() -> list[DefenseName]:

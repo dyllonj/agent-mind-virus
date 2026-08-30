@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -7,7 +8,7 @@ import pytest
 from mindvirus.audit import audit_run
 from mindvirus.config import expand_matrix, load_config
 from mindvirus.providers import MockModelClient, ModelClient
-from mindvirus.runner import run_cell
+from mindvirus.runner import load_summaries, run_cell
 from mindvirus.schemas import ModelRequest, ModelResponse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,3 +55,10 @@ async def test_failed_attempt_is_preserved_when_same_cell_is_resumed(tmp_path: P
     selection = (run_dir / "selected_attempt.json").read_text()
     assert '"path": "attempts/0002"' in selection
     assert audit_run(run_dir)["passed"]
+
+    selected_infection_count = second.infection_count
+    root_payload = second.model_dump(mode="json")
+    root_payload["infection_count"] = selected_infection_count + 100
+    (run_dir / "summary.json").write_text(json.dumps(root_payload))
+    summaries = load_summaries(config.resolved_output_dir())
+    assert summaries[0].infection_count == selected_infection_count

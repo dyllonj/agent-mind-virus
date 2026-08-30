@@ -2,7 +2,13 @@
 
 ## Data integrity
 
-The frozen manifest fingerprint was `[FINGERPRINT]`. We attempted `[N]` rollouts, completed `[N]`, and excluded `[N]` for the preregistered technical reasons. `[N]` of `[N]` completed runs passed the trace-integrity audit. The human-review sample contained `[N]` agent records. Exact judge agreement was `[VALUE]`, and quadratic-weighted kappa was `[VALUE]`.
+The frozen manifest fingerprint was `[FINGERPRINT]`, the archived manifest SHA-256 was
+`[MANIFEST SHA-256]`, and the admitted input-dataset SHA-256 was `[DATASET SHA-256]`. We
+planned `[N]` rollouts, observed `[N]` logical runs, completed `[N]`, and excluded `[N]` for
+the preregistered technical reasons. `[N]` of `[N]` completed runs passed the trace-integrity
+audit. The primary paired bootstrap retained `[N]` of `[N]` randomization strata. The
+human-review sample contained `[N]` agent records. Exact judge agreement was `[VALUE]`, and
+quadratic-weighted kappa was `[VALUE]`.
 
 ## Primary result
 
