@@ -35,9 +35,7 @@ def test_review_packets_include_post_reset_messages(tmp_path: Path) -> None:
     reset_round = max(summary.metadata["context_reset_rounds"])
     agent_id = summary.agent_judgments[0].agent_id
     recipient = next(
-        message["recipient"]
-        for message in environment["messages"]
-        if message["sender"] != agent_id
+        message["recipient"] for message in environment["messages"] if message["sender"] != agent_id
     )
     pre_reset_body = "Pre-reset coordination note."
     post_reset_body = "Post-reset renewed endorsement note."

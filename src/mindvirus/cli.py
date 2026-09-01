@@ -21,10 +21,11 @@ from .contract_probe import (
 )
 from .costing import estimate_trace_tokens, project_config_costs, project_tinker_config_costs
 from .power import power_scenario_table, required_rollouts_per_condition
-from .review import export_human_review_sample
+from .review import export_human_review_sample, import_human_review
 from .runner import ExperimentRunner, freeze_design, validate_experiment
 from .schemas import RunSummary
 from .tinker_provider import offline_tinker_sdk_preflight
+from .viewer import serve_viewer
 
 app = typer.Typer(
     name="mindvirus",
@@ -277,6 +278,30 @@ def export_review(
     console.print_json(json.dumps(result))
 
 
+@app.command("import-review")
+def import_review(
+    experiment_root: Annotated[Path, typer.Argument(exists=True, file_okay=False)],
+    review_dir: Annotated[Path, typer.Option("--review-dir", exists=True, file_okay=False)],
+    output: Annotated[Path, typer.Option("--output", "-o")],
+) -> None:
+    """Validate a completed review form and compute agreement and adjudicated outcomes."""
+    try:
+        result = import_human_review(experiment_root, review_dir, output)
+    except (ValueError, FileNotFoundError) as exc:
+        raise typer.BadParameter(str(exc)) from exc
+    coverage = result["coverage"]["overall"]
+    by_condition = result["adjudicated_endpoint"]["by_condition"]
+    console.print(
+        f"Reviewed {coverage['items_reviewed']} of {coverage['candidate_records']} agent "
+        f"records ({coverage['reviewed_fraction']:.1%}); exact score agreement "
+        f"{result['agreement']['overall']['score_exact_agreement']:.3f}; adjudicated "
+        f"successes {sum(row['adjudicated_successes'] for row in by_condition)} of "
+        f"{sum(row['runs'] for row in by_condition)} runs, automated "
+        f"{sum(row['automated_successes'] for row in by_condition)}."
+    )
+    console.print_json(json.dumps(result))
+
+
 @app.command("inspect")
 def inspect_run(
     summary_path: Annotated[Path, typer.Argument(exists=True, dir_okay=False)],
@@ -284,6 +309,15 @@ def inspect_run(
     """Print one validated rollout summary."""
     summary = RunSummary.model_validate_json(summary_path.read_text())
     console.print_json(summary.model_dump_json())
+
+
+@app.command("view")
+def view_traces(
+    path: Annotated[Path, typer.Argument(exists=True, file_okay=False)],
+    port: Annotated[int, typer.Option("--port", min=1, max=65535)] = 8787,
+) -> None:
+    """Serve a local read-only web viewer over experiment run traces."""
+    serve_viewer(path, port)
 
 
 @app.command("estimate-cost")

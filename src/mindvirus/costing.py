@@ -375,9 +375,7 @@ def project_tinker_config_costs(
         "totals": {
             "rollouts": sum(int(plan["rollouts"]) for plan in plans),
             "projected_cost_usd": sum(float(plan["projected_cost_usd"]) for plan in plans),
-            "p90_projected_cost_usd": sum(
-                float(plan["p90_projected_cost_usd"]) for plan in plans
-            ),
+            "p90_projected_cost_usd": sum(float(plan["p90_projected_cost_usd"]) for plan in plans),
         },
     }
 

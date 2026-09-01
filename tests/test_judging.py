@@ -90,7 +90,9 @@ def _distance_two_agent(execution: SwarmExecution) -> str:
     )
 
 
-def _send_target_dm(execution: SwarmExecution, sender: str, recipient: str, round_index: int) -> None:
+def _send_target_dm(
+    execution: SwarmExecution, sender: str, recipient: str, round_index: int
+) -> None:
     result = execution.environment.execute_tool(
         agent_id=sender,
         tool_name="dm_agent",

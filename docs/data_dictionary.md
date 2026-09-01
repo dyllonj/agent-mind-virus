@@ -63,7 +63,9 @@ retaining total counts. `stratified_estimates.csv` retains complete design-facto
 target has no in-scope observations.
 
 `agent_level.csv` contains nested descriptive observations. `threshold_robustness.csv`
-recomputes the endpoint at score thresholds 2 and 3. `strategy_taxonomy.csv` gives
+recomputes the endpoint at score thresholds 2 and 3. Deterministic-only and
+threshold-sensitivity scores are high-recall screens, not adoption evidence.
+`strategy_taxonomy.csv` gives
 rollout-level indicators for the fixed mechanism taxonomy. `strategy_messages.csv` gives
 category-coded messages. `transmission_edges.csv` gives every target-bearing directed
 message edge, graph distances, rounds, and final recipient and sender scores.
@@ -94,6 +96,31 @@ call ID, seed-linked provenance, exact token counts, renderer termination, laten
 utilization, tool-call count, and calculated or reported cost. `provider_diagnostics.csv`
 aggregates those fields by host/judge role and model variant. `technical_failures.csv`
 retains every failed immutable attempt and its error class.
+
+## Human review files
+
+`export-review` writes the blinded packet (`human_review_items.jsonl`), the unblinding key
+(`human_review_key.csv`), the blank `human_review_form.csv`, and `review_manifest.json`.
+`import-review` reads the completed form and writes two sensitivity-analysis artifacts;
+stored summaries are never modified.
+
+`human_review_agreement.json` records the fixed adjudication rule, the generation and
+form-modification timestamps, coverage, agreement, inter-rater reliability when any item
+has two or more reviewers, and the adjudicated endpoint. Coverage reports, per
+`goal_id` × automated-score stratum and overall, the candidate record count, items
+exported, items reviewed, the reviewed fraction, and a `below_required_fraction` flag
+against the manifest's `judge.human_review_fraction`. Agreement compares automated and
+adjudicated-human values overall and per goal: exact agreement and quadratic-weighted
+kappa on adoption score, plus exact agreement on advocacy, propagation attempt, and
+persistence. `inter_rater` reports pairwise reviewer exact agreement and
+quadratic-weighted kappa on adoption score. `adjudicated_endpoint` lists, per run, the
+automated and adjudicated strict multi-hop success, a `changed` flag, and the reviewed
+agent IDs, plus success counts and rates by condition.
+
+`human_review_scores.csv` has one row per reviewed item: `review_id`, the semicolon-joined
+`reviewers` and `reviewer_count`, the adjudicated `human_adoption_score`,
+`human_advocacy`, `human_propagation_attempt`, and `human_persistent`, the
+`automated_score`, and per-field exact-agreement flags.
 
 ## Audit and billing artifacts
 

@@ -299,9 +299,7 @@ def reserve_contract_probe_output(path: Path) -> None:
         with path.open("x") as handle:
             handle.write(json.dumps({"status": "contract_probe_in_progress"}) + "\n")
     except FileExistsError:
-        raise FileExistsError(
-            f"refusing to overwrite Tinker contract probe {path}"
-        ) from None
+        raise FileExistsError(f"refusing to overwrite Tinker contract probe {path}") from None
 
 
 def write_contract_probe(path: Path, payload: dict[str, Any], *, reserved: bool = False) -> None:

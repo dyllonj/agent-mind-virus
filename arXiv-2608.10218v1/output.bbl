@@ -1,0 +1,235 @@
+\begin{thebibliography}{41}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[lna()]{lnajtmoltbook_nodate}
+lnajt/moltbook · {Datasets} at {Hugging} {Face}.
+\newblock URL \url{https://huggingface.co/datasets/lnajt/moltbook}.
+
+\bibitem[noa({\natexlab{a}})]{noauthor_building_nodate}
+Building a {C} compiler with a team of parallel {Claudes}, {\natexlab{a}}.
+\newblock URL \url{https://www.anthropic.com/engineering/building-c-compiler}.
+
+\bibitem[noa({\natexlab{b}})]{noauthor_moltbook_nodate}
+moltbook - the front page of the agent internet, {\natexlab{b}}.
+\newblock URL \url{https://www.moltbook.com}.
+
+\bibitem[noa(2026)]{noauthor_quine_2026}
+Quine (computing), June 2026.
+\newblock URL \url{https://en.wikipedia.org/w/index.php?title=Quine_(computing)&oldid=1357261770}.
+\newblock Page Version ID: 1357261770.
+
+\bibitem[Agrawal et~al.(2026)Agrawal, Tan, Soylu, Ziems, Khare, Opsahl-Ong, Singhvi, Shandilya, Ryan, Jiang, Potts, Sen, Dimakis, Stoica, Klein, Zaharia, and Khattab]{agrawal2026gepareflectivepromptevolution}
+Lakshya~A Agrawal, Shangyin Tan, Dilara Soylu, Noah Ziems, Rishi Khare, Krista Opsahl-Ong, Arnav Singhvi, Herumb Shandilya, Michael~J Ryan, Meng Jiang, Christopher Potts, Koushik Sen, Alexandros~G. Dimakis, Ion Stoica, Dan Klein, Matei Zaharia, and Omar Khattab.
+\newblock Gepa: Reflective prompt evolution can outperform reinforcement learning, 2026.
+\newblock URL \url{https://arxiv.org/abs/2507.19457}.
+
+\bibitem[AL et~al.(2024)AL, Ahn, Becker, Carroll, Christie, Cortes, Demirci, Du, Li, Luo, Wang, Willows, Yang, and Yang]{al_project_2024}
+Altera AL, Andrew Ahn, Nic Becker, Stephanie Carroll, Nico Christie, Manuel Cortes, Arda Demirci, Melissa Du, Frankie Li, Shuying Luo, Peter~Y. Wang, Mathew Willows, Feitong Yang, and Guangyu~Robert Yang.
+\newblock Project {Sid}: {Many}-agent simulations toward {AI} civilization, October 2024.
+\newblock URL \url{http://arxiv.org/abs/2411.00114}.
+\newblock arXiv:2411.00114 [cs.AI].
+
+\bibitem[Anthropic(2025)]{anthropic2025claude4}
+Anthropic.
+\newblock System card: Claude opus 4 \& claude sonnet 4.
+\newblock \url{https://www-cdn.anthropic.com/07b2a3f9902ee19fe39a36ca638e5ae987bc64dd.pdf}, May 2025.
+\newblock Accessed: 2026-05-22.
+
+\bibitem[aryaj et~al.(2026)aryaj, Rajamanoharan, and Nanda]{aryaj_models_2026}
+aryaj, Senthooran Rajamanoharan, and Neel Nanda.
+\newblock models have some pretty funny attractor states — {LessWrong}.
+\newblock February 2026.
+\newblock URL \url{https://www.lesswrong.com/posts/mgjtEHeLgkhZZ3cEx/models-have-some-pretty-funny-attractor-states}.
+
+\bibitem[Ashery et~al.(2025)Ashery, Aiello, and Baronchelli]{ashery_emergent_2025}
+Ariel~Flint Ashery, Luca~Maria Aiello, and Andrea Baronchelli.
+\newblock Emergent social conventions and collective bias in {LLM} populations.
+\newblock \emph{Science Advances}, 11\penalty0 (20):\penalty0 eadu9368, May 2025.
+\newblock \doi{10.1126/sciadv.adu9368}.
+\newblock URL \url{https://www.science.org/doi/10.1126/sciadv.adu9368}.
+
+\bibitem[Chao et~al.(2024)Chao, Robey, Dobriban, Hassani, Pappas, and Wong]{chao2024jailbreakingblackboxlarge}
+Patrick Chao, Alexander Robey, Edgar Dobriban, Hamed Hassani, George~J. Pappas, and Eric Wong.
+\newblock Jailbreaking black box large language models in twenty queries, 2024.
+\newblock URL \url{https://arxiv.org/abs/2310.08419}.
+
+\bibitem[Cloud et~al.(2025)Cloud, Le, Chua, Betley, Sztyber-Betley, Hilton, Marks, and Evans]{cloud_subliminal_2025}
+Alex Cloud, Minh Le, James Chua, Jan Betley, Anna Sztyber-Betley, Jacob Hilton, Samuel Marks, and Owain Evans.
+\newblock Subliminal {Learning}: {Language} models transmit behavioral traits via hidden signals in data, July 2025.
+\newblock URL \url{http://arxiv.org/abs/2507.14805}.
+\newblock arXiv:2507.14805 [cs].
+
+\bibitem[Cohen et~al.(2025)Cohen, Bitton, and Nassi]{cohen_here_2025}
+Stav Cohen, Ron Bitton, and Ben Nassi.
+\newblock Here {Comes} {The} {AI} {Worm}: {Unleashing} {Zero}-click {Worms} that {Target} {GenAI}-{Powered} {Applications}, January 2025.
+\newblock URL \url{http://arxiv.org/abs/2403.02817}.
+\newblock arXiv:2403.02817 [cs] version: 2.
+
+\bibitem[Dang et~al.(2026)Dang, Ngo, and Hy]{dang2026rainbowplusenhancingadversarialprompt}
+Quy-Anh Dang, Chris Ngo, and Truong-Son Hy.
+\newblock Rainbowplus: Enhancing adversarial prompt generation via evolutionary quality-diversity search, 2026.
+\newblock URL \url{https://arxiv.org/abs/2504.15047}.
+
+\bibitem[Fernando et~al.(2023)Fernando, Banarse, Michalewski, Osindero, and Rocktäschel]{fernando2023promptbreederselfreferentialselfimprovementprompt}
+Chrisantha Fernando, Dylan Banarse, Henryk Michalewski, Simon Osindero, and Tim Rocktäschel.
+\newblock Promptbreeder: Self-referential self-improvement via prompt evolution, 2023.
+\newblock URL \url{https://arxiv.org/abs/2309.16797}.
+
+\bibitem[Gu et~al.(2024)Gu, Zheng, Pang, Du, Liu, Wang, Jiang, and Lin]{gu_agent_2024}
+Xiangming Gu, Xiaosen Zheng, Tianyu Pang, Chao Du, Qian Liu, Ye~Wang, Jing Jiang, and Min Lin.
+\newblock Agent {Smith}: {A} {Single} {Image} {Can} {Jailbreak} {One} {Million} {Multimodal} {LLM} {Agents} {Exponentially} {Fast}, June 2024.
+\newblock URL \url{http://arxiv.org/abs/2402.08567}.
+\newblock arXiv:2402.08567 [cs].
+
+\bibitem[Hammond et~al.(2025)Hammond, Chan, Clifton, Hoelscher-Obermaier, Khan, McLean, Smith, Barfuss, Foerster, Gavenčiak, Han, Hughes, Kovařík, Kulveit, Leibo, Oesterheld, Witt, Shah, Wellman, Bova, Cimpeanu, Ezell, Feuillade-Montixi, Franklin, Kran, Krawczuk, Lamparth, Lauffer, Meinke, Motwani, Reuel, Conitzer, Dennis, Gabriel, Gleave, Hadfield, Haghtalab, Kasirzadeh, Krier, Larson, Lehman, Parkes, Piliouras, and Rahwan]{hammond_multi-agent_2025}
+Lewis Hammond, Alan Chan, Jesse Clifton, Jason Hoelscher-Obermaier, Akbir Khan, Euan McLean, Chandler Smith, Wolfram Barfuss, Jakob Foerster, Tomáš Gavenčiak, The~Anh Han, Edward Hughes, Vojtěch Kovařík, Jan Kulveit, Joel~Z. Leibo, Caspar Oesterheld, Christian Schroeder~de Witt, Nisarg Shah, Michael Wellman, Paolo Bova, Theodor Cimpeanu, Carson Ezell, Quentin Feuillade-Montixi, Matija Franklin, Esben Kran, Igor Krawczuk, Max Lamparth, Niklas Lauffer, Alexander Meinke, Sumeet Motwani, Anka Reuel, Vincent Conitzer, Michael Dennis, Iason Gabriel, Adam Gleave, Gillian Hadfield, Nika Haghtalab, Atoosa Kasirzadeh, Sébastien Krier, Kate Larson, Joel Lehman, David~C. Parkes, Georgios Piliouras, and Iyad Rahwan.
+\newblock Multi-{Agent} {Risks} from {Advanced} {AI}, February 2025.
+\newblock URL \url{http://arxiv.org/abs/2502.14143}.
+\newblock arXiv:2502.14143 [cs].
+
+\bibitem[Kong et~al.(2025)Kong, Lin, Xu, Wang, Li, Li, Zhang, Peng, Chen, Sha, Li, Lin, Wang, Liu, Zhang, Chen, Wu, Khan, and Han]{kong2025surveyllmdrivenaiagent}
+Dezhang Kong, Shi Lin, Zhenhua Xu, Zhebo Wang, Minghao Li, Yufeng Li, Yilun Zhang, Hujin Peng, Xiang Chen, Zeyang Sha, Yuyuan Li, Changting Lin, Xun Wang, Xuan Liu, Ningyu Zhang, Chaochao Chen, Chunming Wu, Muhammad~Khurram Khan, and Meng Han.
+\newblock A survey of llm-driven ai agent communication: Protocols, security risks, and defense countermeasures, 2025.
+\newblock URL \url{https://arxiv.org/abs/2506.19676}.
+
+\bibitem[Lee and Tiwari(2024)]{lee_prompt_2024}
+Donghyun Lee and Mo~Tiwari.
+\newblock Prompt {Infection}: {LLM}-to-{LLM} {Prompt} {Injection} within {Multi}-{Agent} {Systems}, October 2024.
+\newblock URL \url{http://arxiv.org/abs/2410.07283}.
+\newblock arXiv:2410.07283 [cs].
+
+\bibitem[Li(2026)]{li2026moltbookillusionseparatinghuman}
+Ning Li.
+\newblock The moltbook illusion: Separating human influence from emergent behavior in ai agent societies, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.07432}.
+
+\bibitem[Li et~al.(2024)Li, Liang, Zhang, Fang, Liu, and Chang]{li2024semanticmirrorjailbreakgenetic}
+Xiaoxia Li, Siyuan Liang, Jiyi Zhang, Han Fang, Aishan Liu, and Ee-Chien Chang.
+\newblock Semantic mirror jailbreak: Genetic algorithm based jailbreak prompts against open-source llms, 2024.
+\newblock URL \url{https://arxiv.org/abs/2402.14872}.
+
+\bibitem[Lin(2026)]{lin_scaling_2026}
+Wilson Lin.
+\newblock Scaling long-running autonomous coding · {Cursor}, January 2026.
+\newblock URL \url{https://cursor.com/blog/scaling-agents}.
+
+\bibitem[Liu et~al.(2024{\natexlab{a}})Liu, Xu, Chen, and Xiao]{liu2024autodangeneratingstealthyjailbreak}
+Xiaogeng Liu, Nan Xu, Muhao Chen, and Chaowei Xiao.
+\newblock Autodan: Generating stealthy jailbreak prompts on aligned large language models, 2024{\natexlab{a}}.
+\newblock URL \url{https://arxiv.org/abs/2310.04451}.
+
+\bibitem[Liu et~al.(2024{\natexlab{b}})Liu, Chen, Zhang, Gao, Zhang, and Yan]{liu_skepticism_2024}
+Yuhan Liu, Xiuying Chen, Xiaoqing Zhang, Xing Gao, Ji~Zhang, and Rui Yan.
+\newblock From {Skepticism} to {Acceptance}: {Simulating} the {Attitude} {Dynamics} {Toward} {Fake} {News}.
+\newblock In \emph{Proceedings of the {Thirty}-{ThirdInternational} {Joint} {Conference} on {Artificial} {Intelligence}}, pages 7849--7857, August 2024{\natexlab{b}}.
+\newblock \doi{10.24963/ijcai.2024/873}.
+\newblock URL \url{http://arxiv.org/abs/2403.09498}.
+\newblock arXiv:2403.09498 [cs.SI].
+
+\bibitem[Lopez(2025)]{lopez_rise_2025}
+Adele Lopez.
+\newblock The {Rise} of {Parasitic} {AI} — {LessWrong}.
+\newblock September 2025.
+\newblock URL \url{https://www.lesswrong.com/posts/6ZnznCaTcbGYsCmqu/the-rise-of-parasitic-ai}.
+
+\bibitem[Lu et~al.(2026)Lu, Gallagher, Michala, Fish, and Lindsey]{lu_assistant_2026}
+Christina Lu, Jack Gallagher, Jonathan Michala, Kyle Fish, and Jack Lindsey.
+\newblock The {Assistant} {Axis}: {Situating} and {Stabilizing} the {Default} {Persona} of {Language} {Models}, January 2026.
+\newblock URL \url{https://arxiv.org/abs/2601.10387v1}.
+
+\bibitem[Mallen(2025)]{mallen_case_2025}
+Alex Mallen.
+\newblock The case for countermeasures to memetic spread of misaligned values — {AI} {Alignment} {Forum}.
+\newblock May 2025.
+\newblock URL \url{https://www.alignmentforum.org/posts/qjCk73Hu4wv9ocmRF/the-case-for-countermeasures-to-memetic-spread-of-misaligned}.
+
+\bibitem[Marzo and Garcia(2026)]{demarzo2026collectivebehavioraiagents}
+Giordano~De Marzo and David Garcia.
+\newblock Collective behavior of ai agents: the case of moltbook, 2026.
+\newblock URL \url{https://arxiv.org/abs/2602.09270}.
+
+\bibitem[Marzo et~al.(2025)Marzo, Castellano, and Garcia]{marzo_ai_2025}
+Giordano~De Marzo, Claudio Castellano, and David Garcia.
+\newblock {AI} agents can coordinate beyond human scale, April 2025.
+\newblock URL \url{http://arxiv.org/abs/2409.02822}.
+\newblock arXiv:2409.02822 [physics.soc-ph].
+
+\bibitem[Men et~al.(2025)Men, Cao, Jin, Chen, Liu, and Zhao]{men2025troublemakercontagiousjailbreakmakes}
+Tianyi Men, Pengfei Cao, Zhuoran Jin, Yubo Chen, Kang Liu, and Jun Zhao.
+\newblock A troublemaker with contagious jailbreak makes chaos in honest towns, 2025.
+\newblock URL \url{https://arxiv.org/abs/2410.16155}.
+
+\bibitem[Peigne-Lefebvre et~al.(2025)Peigne-Lefebvre, Kniejski, Sondej, David, Hoelscher-Obermaier, Witt, and Kran]{peigne-lefebvre_multi-agent_2025}
+Pierre Peigne-Lefebvre, Mikolaj Kniejski, Filip Sondej, Matthieu David, Jason Hoelscher-Obermaier, Christian Schroeder~de Witt, and Esben Kran.
+\newblock Multi-{Agent} {Security} {Tax}: {Trading} {Off} {Security} and {Collaboration} {Capabilities} in {Multi}-{Agent} {Systems}, June 2025.
+\newblock URL \url{http://arxiv.org/abs/2502.19145}.
+\newblock arXiv:2502.19145 [cs].
+
+\bibitem[Potts(2026)]{potts_red-teaming_2026}
+Brenda Potts.
+\newblock Red-teaming a network of agents: {Understanding} what breaks when {AI} agents interact at scale, April 2026.
+\newblock URL \url{https://www.microsoft.com/en-us/research/blog/red-teaming-a-network-of-agents-understanding-what-breaks-when-ai-agents-interact-at-scale/}.
+
+\bibitem[Shen et~al.(2025)Shen, Liu, Dai, Wang, Miao, Tan, Pan, and Wang]{shen_understanding_2025}
+Xu~Shen, Yixin Liu, Yiwei Dai, Yili Wang, Rui Miao, Yue Tan, Shirui Pan, and Xin Wang.
+\newblock Understanding the {Information} {Propagation} {Effects} of {Communication} {Topologies} in {LLM}-based {Multi}-{Agent} {Systems}.
+\newblock In Christos Christodoulopoulos, Tanmoy Chakraborty, Carolyn Rose, and Violet Peng, editors, \emph{Proceedings of the 2025 {Conference} on {Empirical} {Methods} in {Natural} {Language} {Processing}}, pages 12347--12361, Suzhou, China, November 2025. Association for Computational Linguistics.
+\newblock ISBN 979-8-89176-332-6.
+\newblock \doi{10.18653/v1/2025.emnlp-main.623}.
+\newblock URL \url{https://aclanthology.org/2025.emnlp-main.623/}.
+
+\bibitem[Sofroniew et~al.(2026)Sofroniew, Kauvar, Saunders, Chen, Henighan, Hydrie, Citro, Pearce, Tarng, Gurnee, Batson, Zimmerman, Rivoire, Fish, Olah, and Lindsey]{sofroniew2026emotionconceptsfunctionlarge}
+Nicholas Sofroniew, Isaac Kauvar, William Saunders, Runjin Chen, Tom Henighan, Sasha Hydrie, Craig Citro, Adam Pearce, Julius Tarng, Wes Gurnee, Joshua Batson, Sam Zimmerman, Kelley Rivoire, Kyle Fish, Chris Olah, and Jack Lindsey.
+\newblock Emotion concepts and their function in a large language model, 2026.
+\newblock URL \url{https://arxiv.org/abs/2604.07729}.
+
+\bibitem[Steinberger and {OpenClaw Contributors}(2025)]{steinberger2025openclaw}
+Peter Steinberger and {OpenClaw Contributors}.
+\newblock Openclaw — personal ai assistant, 2025.
+\newblock URL \url{https://github.com/openclaw/openclaw}.
+
+\bibitem[Tang et~al.(2026)Tang, Xu, Cheng, Ren, Wang, and Jiang]{tang2026evojailevolutionarydiversejailbreak}
+Rui Tang, Kaiyu Xu, Pengsen Cheng, Hao Ren, Haizhou Wang, and Shuyu Jiang.
+\newblock Evojail: Evolutionary diverse jailbreak prompt generation for large language models, 2026.
+\newblock URL \url{https://arxiv.org/abs/2605.02921}.
+
+\bibitem[Weckbecker et~al.(2026)Weckbecker, Müller, Hagag, and Mulet]{weckbecker2026thoughtvirusviralmisalignment}
+Moritz Weckbecker, Jonas Müller, Ben Hagag, and Michael Mulet.
+\newblock Thought virus: Viral misalignment via subliminal prompting in multi-agent systems, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.00131}.
+
+\bibitem[Yang et~al.(2026)Yang, He, Ji, Hooi, and Dong]{yang_zombie_2026}
+Xianglin Yang, Yufei He, Shuo Ji, Bryan Hooi, and Jin~Song Dong.
+\newblock Zombie {Agents}: {Persistent} {Control} of {Self}-{Evolving} {LLM} {Agents} via {Self}-{Reinforcing} {Injections}, March 2026.
+\newblock URL \url{http://arxiv.org/abs/2602.15654}.
+\newblock arXiv:2602.15654 [cs.CR].
+
+\bibitem[Yee and Koh(2026)]{yee_benchmarking_2026}
+Brandon Yee and Pairie Koh.
+\newblock Benchmarking {Emergent} {Coordination} in {Large}-{Scale} {LLM} {Populations}: {An} {Evaluation} {Framework} on the {MoltBook} {Archive}, April 2026.
+\newblock URL \url{http://arxiv.org/abs/2603.03555}.
+\newblock arXiv:2603.03555 [cs.MA].
+
+\bibitem[Yu et~al.(2025)Yu, Hu, Pang, Du, Lin, and Fredrikson]{yu2025infecting}
+Weichen Yu, Kai Hu, Tianyu Pang, Chao Du, Min Lin, and Matt Fredrikson.
+\newblock Infecting {LLM} agents via generalizable adversarial attack.
+\newblock In \emph{Red Teaming GenAI: What Can We Learn from Adversaries?}, 2025.
+\newblock URL \url{https://openreview.net/forum?id=udsmFGMwlp}.
+
+\bibitem[Zhang et~al.(2026)Zhang, Wei, Luan, Wu, Zhang, Wu, Wu, Chen, Sun, and Sun]{zhang_clawworm_2026}
+Yihao Zhang, Zeming Wei, Xiaokun Luan, Chengcan Wu, Zhixin Zhang, Jiangrong Wu, Haolin Wu, Huanran Chen, Jun Sun, and Meng Sun.
+\newblock {ClawWorm}: {Self}-{Propagating} {Attacks} {Across} {LLM} {Agent} {Ecosystems}, 2026.
+\newblock URL \url{https://arxiv.org/abs/2603.15727}.
+\newblock Version Number: 2.
+
+\bibitem[Zhou et~al.(2023)Zhou, Muresanu, Han, Paster, Pitis, Chan, and Ba]{zhou2022large}
+Yongchao Zhou, Andrei~Ioan Muresanu, Ziwen Han, Keiran Paster, Silviu Pitis, Harris Chan, and Jimmy Ba.
+\newblock Large {Language} {Models} {Are} {Human}-{Level} {Prompt} {Engineers}, March 2023.
+\newblock URL \url{http://arxiv.org/abs/2211.01910}.
+\newblock arXiv:2211.01910 [cs.LG].
+
+\end{thebibliography}

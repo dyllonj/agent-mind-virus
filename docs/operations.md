@@ -119,9 +119,9 @@ The LiteLLM adapter can use provider-native environment variables or the configu
 
 ## Forty-eight-hour sequence
 
-First run the complete local quality gate and archive its output. Next validate and run `configs/paid_canary.yaml`, which contains one matched treatment-control pair, uses concurrency one, and disables automatic retries. Any manifest with a non-mock host or judge backend places paid calls, so `run` refuses it without the explicit `--authorize-paid-calls` acknowledgement. Confirm the provider-reported cost and token fields in both summaries before authorizing the 16-rollout pilot. Then validate `configs/weekend_pilot.yaml`, inspect its reported run and turn counts, and run it. While it runs, watch `runs/weekend-pilot-v1/run_index.csv` and per-run `failure.json` files. Resume uses the same command; completed summaries are skipped.
+First run the complete local quality gate and archive its output. Next validate and run `configs/paid_canary.yaml`, which contains one matched treatment-control pair, uses concurrency one, and disables automatic retries. The canary validates provider plumbing only — authentication, traces, usage and cost accounting, paired seeds, judge parsing, and the audit path; with one target and two rollouts it cannot calibrate measurement risks. Any manifest with a non-mock host or judge backend places paid calls, so `run` refuses it without the explicit `--authorize-paid-calls` acknowledgement. Confirm the provider-reported cost and token fields in both summaries before authorizing the 16-rollout pilot. Then validate `configs/weekend_pilot.yaml`, inspect its reported run and turn counts, and run it. The pilot is the four-target calibration step: it covers all four goals in both conditions, so it calibrates deterministic-screen false positives on the AI-target lexicons, refusal and harmful-target behavior, and per-target heterogeneity before the confirmatory freeze. While it runs, watch `runs/weekend-pilot-v1/run_index.csv` and per-run `failure.json` files. Resume uses the same command; completed summaries are skipped.
 
-After the pilot, run the invariant audit, export blinded review items, and inspect failures without opening condition-level outcome tables. Decide and record the minimum meaningful effect, accepted provider model IDs, concurrency, and budget. Then copy or edit the candidate confirmatory manifest, validate it, and archive the exact file plus its printed fingerprint. Do not change the frozen file after outcome inspection.
+After the pilot, run the invariant audit, export blinded review items, and inspect failures without opening condition-level outcome tables. Reviewers complete `human_review_form.csv` blinded, and `import-review` then validates coverage and computes agreement before any outcome tables are inspected. Decide and record the minimum meaningful effect, accepted provider model IDs, concurrency, and budget. Then copy or edit the candidate confirmatory manifest, validate it, and archive the exact file plus its printed fingerprint. Do not change the frozen file after outcome inspection.
 
 Run analysis only when the planned manifest is complete. The commands are:
 
@@ -130,6 +130,7 @@ uv run mindvirus validate configs/weekend_pilot.yaml
 uv run mindvirus run configs/weekend_pilot.yaml --authorize-paid-calls
 uv run mindvirus verify runs/weekend-pilot-v1 --output runs/weekend-pilot-v1/audit.json
 uv run mindvirus export-review runs/weekend-pilot-v1 --output review/weekend-pilot-v1
+uv run mindvirus import-review runs/weekend-pilot-v1 --review-dir review/weekend-pilot-v1 --output analysis-output/weekend-pilot-v1/human-review
 uv run mindvirus analyze runs/weekend-pilot-v1 --output analysis-output/weekend-pilot-v1
 ```
 
@@ -175,5 +176,7 @@ Rate-limit failures should be handled by lowering `concurrency`, not changing pr
 ## Artifacts
 
 Every run directory contains the frozen cell, stimuli, graph, system prompts, full event trace, agent snapshots, environment state, raw judges, and summary. The experiment root contains the resolved config, runtime versions, latest provider snapshot, latest provider ledger, persistent Tinker budget journal when applicable, experiment lock metadata, and immutable `provider_executions/<execution_id>/` records. Analysis produces run-level, agent-level, threshold, judge-agreement, strategy, transmission-edge, provider-call, provider-diagnostic, and technical-failure CSV files, JSON estimates, Markdown results, and PNG/PDF figures.
+
+Inspect stored runs with `uv run mindvirus view runs/smoke --port 8787`, or point the command at the `runs/` tree root to serve every experiment beneath it. The viewer binds 127.0.0.1 only, works fully offline with no external assets, and is strictly read-only: it indexes experiments and their runs and renders summary metrics, the topology, system prompts, per-agent snapshots and judgments, direct messages, judge outputs, and the filterable event trace (agent, kind, round range, and text search) in a single local page. When every indexed run uses a mock model, the page shows a prominent amber MOCK FIXTURE DATA banner so fixture output is never mistaken for empirical evidence.
 
 Keep raw runs immutable after analysis begins. Publish redacted traces if provider terms or sensitive chain-of-thought policies require it; the harness records visible model responses and tool calls, not hidden reasoning.

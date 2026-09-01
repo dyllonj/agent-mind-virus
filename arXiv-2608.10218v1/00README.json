@@ -1,0 +1,21 @@
+{
+   "sources" : [
+      {
+         "usage" : "toplevel",
+         "filename" : "neurips_2026.tex"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "bibli.bib"
+      },
+      {
+         "usage" : "ignore",
+         "filename" : "output.bbl"
+      }
+   ],
+   "spec_version" : 1,
+   "texlive_version" : "2025",
+   "process" : {
+      "compiler" : "xelatex"
+   }
+}

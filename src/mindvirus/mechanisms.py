@@ -183,7 +183,5 @@ def transmission_edges(experiment_root: Path) -> pd.DataFrame:
 
 def _categories(text: str) -> set[str]:
     return {
-        category
-        for category, phrases in STRATEGY_TAXONOMY.items()
-        if matching_terms(text, phrases)
+        category for category, phrases in STRATEGY_TAXONOMY.items() if matching_terms(text, phrases)
     }

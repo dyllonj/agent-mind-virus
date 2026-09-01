@@ -1,0 +1,233 @@
+% =============================================================
+%  payloadbox environment for the virus-chain paper
+%  Usage in preamble:
+%      \usepackage[most]{tcolorbox}
+%      \input{payloadbox.tex}
+%  Usage in body:
+%      \begin{payloadbox}{Box title}
+%      ... raw payload text (verbatim, no escaping) ...
+%      \end{payloadbox}
+% =============================================================
+\usepackage{tcolorbox}
+\usepackage{changepage}  % preamble
+
+\tcbuselibrary{skins,breakable,raster}
+\newtcblisting{payloadbox}[1]{%
+  listing only, breakable, enhanced jigsaw,
+  colback=blue!5!gray!15, colframe=blue!25!gray!40,
+  boxrule=0.5pt, arc=2pt,
+  left=4pt, right=4pt, top=4pt, bottom=4pt,
+  fonttitle=\footnotesize\bfseries\sffamily,
+  colbacktitle=blue!15!gray!30, coltitle=black,
+  title={#1},
+  listing options={
+    basicstyle=\footnotesize\ttfamily,
+    breaklines=true, breakatwhitespace=false,
+    columns=fullflexible, keepspaces=true, upquote=true,
+    literate={→}{{$\rightarrow$}}1
+             {—}{{---}}1
+             {“}{{``}}1 {”}{{''}}1
+             {’}{{'}}1 {‘}{{`}}1
+             {ä}{{\"a}}1 {ö}{{\"o}}1 {ü}{{\"u}}1 {ß}{{\ss{}}}1
+             {Ä}{{\"A}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+             {⚠}{{[!]}}3,
+  },
+}
+
+
+% LLMbox
+% Storage for optional caption text (reset before each llmquote via \AtBeginEnvironment)
+\gdef\llm@caption{}
+% Define a custom 'caption' key that stores the text for display below the box.
+% The native tcolorbox 'label' key is already supported and places a \label at
+% the top of the box, enabling \ref cross-referencing.
+\tcbset{caption/.code={\gdef\llm@caption{#1}}}
+
+\newtcolorbox{llmquote}[1][]{%
+  colback=blue!5!gray!15,
+  colframe=blue!25!gray!40,
+  boxrule=0.5pt,
+  arc=2pt,
+  left=4pt, right=4pt, top=4pt, bottom=4pt,
+  fontupper=\scriptsize\sffamily,
+  fonttitle=\scriptsize\bfseries\sffamily,
+  colbacktitle=blue!15!gray!30,
+  coltitle=black,
+  #1,
+  % Output caption below the box if provided, then reset the storage.
+  after={%
+    \ifx\llm@caption\@empty\else
+      \par\noindent{\footnotesize\sffamily\llm@caption}%
+    \fi
+    \gdef\llm@caption{}%
+  }
+}
+\AtBeginEnvironment{llmquote}{\gdef\llm@caption{}}
+
+\usepackage{caption}
+\DeclareCaptionType{llmtranscript}[Transcript][List of Transcripts]
+\captionsetup[llmtranscript]{
+  justification=centering,
+  font={footnotesize,sf},
+  labelfont=bf,
+  hypcap=false
+}
+
+\makeatletter
+\gdef\llmraster@caption{}\gdef\llmraster@label{}\gdef\llmraster@columns{2}
+\pgfkeys{
+  /llmraster/.is family, /llmraster,
+  caption/.store in=\llmraster@caption,
+  label/.store in=\llmraster@label,
+  columns/.store in=\llmraster@columns,
+  columns/.default=2,
+}
+\newenvironment{llmraster}[1][]{%
+  \gdef\llmraster@caption{}\gdef\llmraster@label{}\gdef\llmraster@columns{2}%
+  \pgfkeys{/llmraster, #1}%
+  \tcbraster[raster columns=\llmraster@columns, raster equal height, raster column skip=2mm]%
+}{%
+  \endtcbraster
+  \ifx\llmraster@caption\@empty\else
+    \par\captionof{llmtranscript}{\llmraster@caption}%
+    \ifx\llmraster@label\@empty\else
+      \label{\llmraster@label}%
+    \fi
+  \fi
+}
+\makeatother
+
+
+
+
+\tcbset{
+  chatturn base/.style={
+    enhanced,  boxrule=0.3pt, arc=2pt,
+    fonttitle=\scriptsize\bfseries\sffamily,
+    fontupper=\scriptsize\sffamily,
+    left=5pt, right=5pt, top=3pt, bottom=3pt,
+    colbacktitle=gray!15, coltitle=black,
+  },
+  chatturn neutral/.style={  chatturn base, colback=white,          colframe=gray!35},
+  chatturn user/.style={     chatturn base, colback=blue!3!white,   colframe=blue!20!gray!50},
+  chatturn assistant/.style={chatturn base, colback=green!3!white,  colframe=green!20!gray!50},
+  chatturn system/.style={   chatturn base, colback=yellow!5!white, colframe=yellow!30!gray!50},
+}
+
+\makeatletter
+\gdef\llmchat@caption{}\gdef\llmchat@label{}
+\pgfkeys{
+  /llmchat/.is family, /llmchat,
+  caption/.store in=\llmchat@caption,
+  label/.store in=\llmchat@label,
+}
+\newenvironment{llmchat}[1][]{%
+  \gdef\llmchat@caption{}\gdef\llmchat@label{}%
+  \pgfkeys{/llmchat, #1}%
+  \begin{tcolorbox}[
+    enhanced, breakable,
+    colback=gray!10, colframe=gray!10,
+    boxrule=0pt, arc=3pt,
+    left=1pt, right=1pt, top=1pt, bottom=1pt,
+  ]%
+}{%
+  \end{tcolorbox}%
+  \ifx\llmchat@caption\@empty\else
+    \par\captionof{llmtranscript}{\llmchat@caption}%
+    \ifx\llmchat@label\@empty\else
+      \label{\llmchat@label}%
+    \fi
+  \fi
+}
+\newcommand{\chatturn}[3][neutral]{%
+  \begin{tcolorbox}[chatturn #1, title=#2]#3\end{tcolorbox}%
+}
+\makeatother
+
+
+
+
+%% CHAT PAIR
+\makeatletter
+\gdef\llmchatpair@caption{}\gdef\llmchatpair@label{}\gdef\llmchatpair@width{0.485\linewidth}
+\pgfkeys{
+  /llmchatpair/.is family, /llmchatpair,
+  caption/.store in=\llmchatpair@caption,
+  label/.store in=\llmchatpair@label,
+  width/.store in=\llmchatpair@width,
+}
+\newenvironment{llmchatpair}[1][]{%
+  \gdef\llmchatpair@caption{}\gdef\llmchatpair@label{}%
+  \gdef\llmchatpair@width{0.49\linewidth}%
+  \pgfkeys{/llmchatpair, #1}%
+  \par\noindent
+\tcbset{breakable=false}%       % <-- add this line
+  \minipage[t]{\llmchatpair@width}%
+}{%
+  \endminipage
+  \par
+  \ifx\llmchatpair@caption\@empty\else
+    \captionof{llmtranscript}{\llmchatpair@caption}%
+    \ifx\llmchatpair@label\@empty\else
+      \label{\llmchatpair@label}%
+    \fi
+  \fi
+}
+\newcommand{\nextchat}{\endminipage\hfill\minipage[t]{\llmchatpair@width}}
+\makeatother
+
+% USAGE :
+
+% \begin{llmchatpair}[caption={Comparing two responses}, label=tr:compare]
+%   \begin{llmchat}
+%     \chatturn[user]{User}{What's 2+2?}
+%     \chatturn[assistant]{Model A}{4}
+%   \end{llmchat}
+%   \nextchat
+%   \begin{llmchat}
+%     \chatturn[user]{User}{What's 2+2?}
+%     \chatturn[assistant]{Model B}{It is 4.}
+%   \end{llmchat}
+% \end{llmchatpair}
+
+% =============================================================
+%  Additions for peer-to-peer agent transcripts
+% =============================================================
+\tcbset{
+  chatturn coral/.style={chatturn base,
+    colback=orange!4!white, colframe=orange!35!gray!55},
+  chatturn quake/.style={chatturn base,
+    colback=violet!3!white, colframe=violet!30!gray!55},
+}
+
+% Tool-call line: short ttfamily marker inside a turn body
+\newcommand{\turntool}[1]{%
+  \par\smallskip\noindent
+  {\scriptsize\ttfamily\textcolor{black!55}{[tool]~~#1}}\par\smallskip}
+
+% Section marker for internal reasoning (content follows as normal paragraphs)
+\newcommand{\turnthink}{%
+  \par\smallskip\noindent
+  {\scriptsize\itshape\textcolor{black!55}{[thinking]}}\par}
+
+\newtcolorbox{turnmessage}[1]{%
+  enhanced, breakable,
+  colback=white, colframe=black!22,
+  boxrule=0.4pt, arc=2pt,
+  left=1pt, right=1pt, top=1pt, bottom=1pt,
+  fontupper=\scriptsize\sffamily,
+  fonttitle=\scriptsize\ttfamily,
+  coltitle=black!65, colbacktitle=black!6,
+  title={send\_message $\to$ #1},
+}
+
+\newtcolorbox{filesnippet}[1]{%
+  enhanced, breakable,
+  colback=white, colframe=black!22,
+  boxrule=0.4pt, arc=2pt,
+  left=1pt, right=1pt, top=1pt, bottom=1pt,
+  fontupper=\scriptsize\sffamily,
+  fonttitle=\scriptsize\ttfamily,
+  coltitle=black!65, colbacktitle=black!6,
+  title={#1},
+}

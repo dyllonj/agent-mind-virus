@@ -82,9 +82,7 @@ async def test_final_memory_round_delivers_messages_sent_after_last_poll(
     ]
     assert with_inbox
     for event in with_inbox:
-        contents = [
-            str(message["content"]) for message in event.payload["request"]["messages"]
-        ]
+        contents = [str(message["content"]) for message in event.payload["request"]["messages"]]
         dm_index = next(
             index for index, content in enumerate(contents) if content.startswith("DM from ")
         )
